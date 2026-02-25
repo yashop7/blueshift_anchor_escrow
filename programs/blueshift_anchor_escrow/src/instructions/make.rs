@@ -5,7 +5,7 @@ use anchor_spl::{
     token_interface::{Mint, TokenAccount},
 };
 
-use crate::state::Escrow;
+use crate::{errors::EscrowError, state::Escrow};
 
 #[derive(Accounts)]
 #[instruction(seed: u64)]
@@ -50,13 +50,13 @@ pub struct Make<'info> {
 }
 
 impl<'info> Make<'info> {
-    fn populate_escrow(&mut self, seed: u64, amount: u64, bump: u8) -> Result<()> {
+    fn populate_escrow(&mut self, seed: u64, receive: u64, bump: u8) -> Result<()> {
         self.escrow.set_inner(Escrow {
             seed,
             maker: self.maker.key(),
             mint_a: self.mint_a.key(),
             mint_b: self.mint_b.key(),
-            receive: amount,
+            receive,
             bump,
         });
         Ok(())
@@ -76,4 +76,11 @@ impl<'info> Make<'info> {
         )?;
         Ok(())
     }
+}
+
+pub fn handler(ctx : Context<Make>, seed : u64 ,receive: u64, amount: u64) -> Result<()> {
+    require_gt!(receive , 0 , EscrowError::InvalidAmount);
+    require_gt!(amount , 0 , EscrowError::InvalidAmount);
+
+    Ok(())
 }

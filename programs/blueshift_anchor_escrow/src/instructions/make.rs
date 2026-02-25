@@ -23,7 +23,7 @@ pub struct Make<'info> {
     #[account(
         mint::token_program = token_program
     )]
-    pub mint_a: InterfaceAccount<'info, Mint>, // Don't know why they have not defined any payer, or decimals, or seeds or nay kind of authority
+    pub mint_a: InterfaceAccount<'info, Mint>,
     #[account(
         mint::token_program = token_program
     )]

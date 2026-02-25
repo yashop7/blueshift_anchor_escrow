@@ -110,7 +110,7 @@ impl<'info> Take<'info> {
             self.vault.amount,
             self.mint_a.decimals,
         )?;
-        // Now how we will close the Vault we will see, I think the rent will be collected by the maker
+
         close_account(CpiContext::new_with_signer(
             self.token_program.to_account_info(),
             CloseAccount {
@@ -125,9 +125,10 @@ impl<'info> Take<'info> {
 }
 
 pub fn handler(ctx: Context<Take>) -> Result<()> {
-    // Transfer from Taker to Maker
+    // Transfer from Taker => Maker
     ctx.accounts.transfer_amount_to()?;
-    // Transfer from Vault to Taker & Closing the Vault Account
+    // Transfer from Vault => Taker 
+    // Closing the Vault Account
     ctx.accounts.transfer_close_vault()?;
     Ok(())
 }

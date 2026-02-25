@@ -7,6 +7,6 @@ pub struct Escrow {
     pub maker: Pubkey,
     pub mint_a: Pubkey,
     pub mint_b: Pubkey,
-    pub receive: u64,
+    pub receive: u64, // How much we want B Tokens
     pub bump: u8,
 }

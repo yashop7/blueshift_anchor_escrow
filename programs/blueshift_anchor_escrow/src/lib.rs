@@ -10,19 +10,18 @@ declare_id!("22222222222222222222222222222222222222222222");
 #[program]
 pub mod blueshift_anchor_escrow {
     use super::*;
-
-    #[instruction(discriminator = 0)]
+    #[instruction(discriminator = 0)] // Understand how Intruction works, what is this discriminator
     pub fn make(ctx: Context<Make>, seed: u64, receive: u64, amount: u64) -> Result<()> {
-        Ok(())
+        make::handler(ctx, seed, receive, amount)
     }
-
+    
     #[instruction(discriminator = 1)]
     pub fn take(ctx: Context<Take>) -> Result<()> {
-        Ok(())
+        take::handler(ctx)
     }
-
+    
     #[instruction(discriminator = 2)]
     pub fn refund(ctx: Context<Refund>) -> Result<()> {
-        Ok(())
+        refund::handler(ctx)
     }
 }
